@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load teacher_goals %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <title>Inicio-Profesor</title>
+    <style>
+        .title-table {
+            width: 100%; 
+            text-align: center; 
+            border-bottom: 1px solid #4D4D4D; 
+            line-height: 0.1em;
+            margin: 10px 0 20px; 
+            margin-top: 1em;
+            margin-bottom: 2em;
+        } 
+        .title-table span { 
+            background: white; 
+            padding:0 10px; 
+        }
+
+        .title-table > span{
+            color: #4D4D4D;
+        }
+
+        .slide-top {
+            -webkit-animation: slide-top 1.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+            animation: slide-top 1.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+        }
+
+        @-webkit-keyframes slide-top {
+            0% {
+                -webkit-transform: translateY(0);
+                transform: translateY(0);
+            }
+            100% {
+                -webkit-transform: translateY(-80px);
+                transform: translateY(-80px);
+            }
+        }
+
+        @keyframes slide-top {
+            0% {
+                -webkit-transform: translateY(0);
+                transform: translateY(0);
+            }
+            100% {
+                -webkit-transform: translateY(-80px);
+                transform: translateY(-80px);
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container-fluid d-flex justify-content-center bg-primary p-3" style="color: white">
+        <h2 class="text-center p-1">
+            {{request.user.user_teacher}} <i class="bi bi-person-fill"></i>
+        </h2>
+        <a href="{% url 'logout' %}" style="text-decoration: none; color:white; font-size: 1.3em; padding: 0.5em; margin-left: 2em;">
+            Cerrar Sesión
+            <i class="bi bi-box-arrow-right"></i>
+        </a>
+    </div>
+    <div class="container" style="padding-left: 3em; padding-right: 3em; padding-top: 3em; width: 80%;">
+        <h3 class="title-table"><span>Programaciones hoy {% now "DATE_FORMAT" %}</span></h3>
+        <table id="table_classroom" class="table table-hover table-striped border-secondary">
+            <thead class="table-dark">
+                <tr>
+                    <th class="text-center">SALA</th>
+                    <th class="text-center">8:15-09:00</th>
+                    <th class="text-center">9:00-09:45</th>
+                    <th class="text-center">10:00-10:45</th>
+                    <th class="text-center">10:45-11:30</th>
+                    <th class="text-center">11:45-12:30</th>
+                    <th class="text-center">12:30-13:15</th>
+                    <th class="text-center">14:00-14:45</th>
+                    <th class="text-center">14:55-15:40</th>
+                    <th class="text-center">15:40-16:25</th>
+                        
+                </tr>
+            </thead>
+            <tbody>
+                {% for classroom, block_dic in class_dic.items %}
+                    <tr>
+                        <td class="text-center">{{ classroom }}</td>
+                        <td class="text-center">
+                            {% if block_dic.records_for_block1 > 0 %}
+                                <a  style="text-decoration: none;" href="{% url 'records_list' classroom.id block_dic.hour_for_block1 %}">{{block_dic.records_for_block1}}</a>
+                            {% else %}
+                                &nbsp;
+                            {% endif %}
+                        </td>
+                        <td class="text-center">
+                            {% if block_dic.records_for_block2 > 0 %}
+                                <a  style="text-decoration: none;" href="{% url 'records_list' classroom.id block_dic.hour_for_block2 %}">{{block_dic.records_for_block2}}</a>
+                            {% else %}
+                                &nbsp;
+                            {% endif %}
+                        </td>
+                        <td class="text-center">
+                            {% if block_dic.records_for_block3 > 0 %}
+                                <a  style="text-decoration: none;" href="{% url 'records_list' classroom.id block_dic.hour_for_block3 %}">{{block_dic.records_for_block3}}</a>
+                            {% else %}
+                                &nbsp;
+                            {% endif %}
+                        </td>
+                        <td class="text-center">
+                            {% if block_dic.records_for_block4 > 0 %}
+                                <a  style="text-decoration: none;" href="{% url 'records_list' classroom.id block_dic.hour_for_block4 %}">{{block_dic.records_for_block4}}</a>
+                            {% else %}
+                                &nbsp;
+                            {% endif %}
+                        </td>
+                        <td class="text-center">
+                            {% if block_dic.records_for_block5 > 0 %}
+                                <a  style="text-decoration: none;" href="{% url 'records_list' classroom.id block_dic.hour_for_block5 %}">{{block_dic.records_for_block5}}</a>
+                            {% else %}
+                                &nbsp;
+                            {% endif %}
+                        </td>
+                        <td class="text-center">
+                            {% if block_dic.records_for_block6 > 0 %}
+                                <a  style="text-decoration: none;" href="{% url 'records_list' classroom.id block_dic.hour_for_block6 %}">{{block_dic.records_for_block6}}</a>
+                            {% else %}
+                                &nbsp;
+                            {% endif %}
+                        </td>
+                        <td class="text-center">
+                            {% if block_dic.records_for_block7 > 0 %}
+                                <a  style="text-decoration: none;" href="{% url 'records_list' classroom.id block_dic.hour_for_block7 %}">{{block_dic.records_for_block7}}</a>
+                            {% else %}
+                                &nbsp;
+                            {% endif %}
+                        </td>
+                        <td class="text-center">
+                            {% if block_dic.records_for_block8 > 0 %}
+                                <a  style="text-decoration: none;" href="{% url 'records_list' classroom.id block_dic.hour_for_block8 %}">{{block_dic.records_for_block8}}</a>
+                            {% else %}
+                                &nbsp;
+                            {% endif %}
+                        </td>
+                        <td class="text-center">
+                            {% if block_dic.records_for_block9 > 0 %}
+                                <a  style="text-decoration: none;" href="{% url 'records_list' classroom.id block_dic.hour_for_block9 %}">{{block_dic.records_for_block9}}</a>
+                            {% else %}
+                                &nbsp;
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+        <a class="btn btn-primary" href="{%url 'total_records' %}">Ver todos los Registros</a>
+
+        <div class="container" style="margin-top: 10em; margin-bottom: 3em;">
+            {% if "goal_created" in request.GET %}
+                <div id="alertCreated" class="slide-top alert alert-warning mt-5 text-center" role="alert" style="font-weight: bold; font-size: 1.2em; color: black;">
+                    Objetivo creado exitosamente!
+                </div>
+            {% endif %}
+            {% if messages %}
+                <ul class="list-unstyled">
+                {% for message in messages %}
+                    <li class=
+                        "alert text-center alert-dismissible fade show slide-top
+                        {% if message.tags == 'error' %}alert-danger
+                        {% elif message.tags == 'success' %}alert-warning
+                        {% elif message.tags == 'warning' %}alert-info
+                        {% else %}alert-info{% endif %}">
+                        <strong style="font-size: 1.2em;">{{ message }}</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+            <div id="alertDelete" class="alert text-center d-none alert-warning alert-dismissible fade show" role="alert">
+                <strong style="font-size: 1.2em;">Objetivo eliminado exitosamente!</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <h3 class="title-table"><span>Objetivos creados</span></h3>
+            {% teacher_goals request.user as goals %}
+            <table class="table table-hover table-striped border-secondary">
+                <thead class="table-dark">
+                    <tr>
+                        <th class="text-center">Descripción</th>
+                        <th class="text-center">Sala</th>
+                        <th class="text-center">Asignatura</th>
+                        <th class="text-center">Editar</th>
+                        <th class="text-center">Eliminar</th>
+                    </tr>
+                <tbody id="tBodytableGoal">
+                    {% for goal in goals %}
+                        <tr>
+                            <td class="text-center">
+                                <a href="{% url 'goal_progress' goal.id %}" style="text-decoration: none; color: black;">
+                                    {{ goal.name }}
+                                </a>
+                            </td>
+                            <td class="text-center">{{ goal.classroom }}</td>
+                            <td class="text-center">{{ goal.course }}</td>
+                            <td class="text-center">
+                                <a href="{% url 'update_goal' goal.id %}">
+                                    <i class="bi bi-pencil-square" style="color: #FCE22A; font-size: 1.2em;"></i>
+                                </a>
+                            </td>
+                            <td class="text-center">
+                                <i class="delete-goal bi bi-x-circle-fill" style="color: #F94A29; font-size: 1.2em; cursor: pointer;"></i>
+                                <a href="{% url 'delete_goal' goal.id %}" style="visibility: hidden;"></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>            
+            <a href="{% url 'create_goal' %}" type="button" class="btn btn-primary">Crear un nuevo objetivo</a>
+        </div>
+
+    </div> 
+    <!-- Custom Script -->
+    <script>
+        
+        // Automatically remove de alert notification about Goal creation
+        setTimeout(function() {
+            document.getElementById('alertCreated').remove();
+        }, 3000);
+
+        // Get csrftoken, the code of this function is provided by django documentation
+        // in the link https://docs.djangoproject.com/en/4.0/ref/csrf/
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        
+        
+        // Function to send the form to the backend
+        const deleteGoal = async (url) => {
+            //Get the CSRF token using the function code provided by django documentation
+            const csrftoken = getCookie('csrftoken'); 
+        
+            const fetchSettings = {
+                method : 'POST',
+                credentials: 'same-origin',
+                headers: {'X-CSRFToken': csrftoken},
+            }
+        
+            try{
+                const request = await fetch(url, fetchSettings)
+                const result = await request.json()
+                return result
+            }catch(error){
+                return error
+            }
+        }
+
+        const tbody = document.getElementById('tBodytableGoal')
+        tbody.addEventListener('click', (e) => { 
+            if (e.target.classList.contains("delete-goal")) {
+                const iconDelete = e.target
+                const row = iconDelete.closest('tr')
+                const linkElement = iconDelete.nextElementSibling
+                const url = linkElement.getAttribute('href')
+                deleteGoal(url).then((result) => {
+                    if (result.result == "goal_deleted") {
+                        row.remove()
+                        const alert = document.getElementById('alertDelete')
+                        alert.classList.remove('d-none')
+                    }
+                })
+            }
+        })
+    </script>
+    <!-- Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>       
+</body>
+</html>

@@ -1,0 +1,18 @@
+{
+  "env": "DEV",
+  "migrate": true,
+  "debug": false,
+  "silicon_chip": false,
+  "cit": {
+    "PORT": "8030",
+    "SECRET_KEY": "*0n3o(6y8t_k1iw_%7^x)riptvn-%kde*%h8e34d%9tpt466ll",
+    "COUNTRY_PREFIX": "CL"
+  },
+  "database": {
+    "DB_HOST": "db",
+    "DB_NAME": "citdb",
+    "DB_PASSWORD": "7F6tfFDqxc4nEDSc",
+    "DB_PORT": "5432",
+    "DB_USER": "postgres"
+  }
+}

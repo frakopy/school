@@ -1,0 +1,43 @@
+version: "3.8"
+services:
+  web:
+    {%- if silicon_chip %}
+    platform: linux/amd64 
+    {%- endif -%}    
+    {%- if env == 'QA' or env == 'PROD' %}    
+    image: path-to-registry.3a.cl/{{ env|lower }}:$SHA
+    {%- else %}
+    build: .
+    {%- endif %}
+    command: >
+      bash -c "/scripts/wait-for-it.sh {{ database.DB_HOST }}:{{ database.DB_PORT }}
+      {%- if migrate %}    
+      && python manage.py migrate
+      {%- endif %} 
+      && python manage.py runserver 0.0.0.0:8000"
+    environment:
+      - COUNTRY_PREFIX={{ cit.COUNTRY_PREFIX }}
+      - DJANGO_SECRET_KEY={{ cit.SECRET_KEY }}
+      - POSTGRES_HOST={{ database.DB_HOST }}
+      - POSTGRES_DB={{ database.DB_NAME }}
+      - POSTGRES_USER={{ database.DB_USER}}
+      - POSTGRES_PASSWORD={{ database.DB_PASSWORD }}
+      - POSTGRES_PORT={{ database.DB_PORT }}
+      - DJANGO_DEBUG={{ debug }}
+      - DJANGO_SETTINGS_MODULE=config.settings.local
+      - ENVIRONMENT={{ env }}
+      - LOGS_DIR=logs
+    ports:
+      - {{ cit.PORT }}:8000
+    volumes: 
+        - "./src:/src"
+    depends_on:
+      - db
+  db:
+    image: postgres
+    volumes:
+      - ./volumes/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB={{ database.DB_NAME }}
+      - POSTGRES_USER={{ database.DB_USER}}
+      - POSTGRES_PASSWORD={{ database.DB_PASSWORD }}

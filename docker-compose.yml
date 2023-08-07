@@ -1,0 +1,44 @@
+version: "3.8"
+services:
+  web:
+    build: .
+    command: >
+      bash -c "/scripts/wait-for-it.sh db:5432    
+      && python manage.py migrate 
+      && python manage.py runserver 0.0.0.0:8000"
+    environment:
+      - COUNTRY_PREFIX=CL
+      - DJANGO_SECRET_KEY=*0n3o(6y8t_k1iw_%7^x)riptvn-%kde*%h8e34d%9tpt466ll
+      - POSTGRES_HOST=db
+      - POSTGRES_DB=citdb
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=7F6tfFDqxc4nEDSc
+      - POSTGRES_PORT=5432
+      - DJANGO_DEBUG=False
+      - DJANGO_SETTINGS_MODULE=config.settings.base
+      - ENVIRONMENT=DEV
+      - LOGS_DIR=logs
+    ports:
+      - 8030:8000
+    volumes: 
+        - "./src:/src"
+    depends_on:
+      - db
+  db:
+    image: postgres
+    volumes:
+      - ./volumes/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=citdb
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=7F6tfFDqxc4nEDSc
+  
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: 'admin@admin.com'
+      PGADMIN_DEFAULT_PASSWORD: 'admin'
+    ports:
+      - "80:80"
+    depends_on:
+      - db

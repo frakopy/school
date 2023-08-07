@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <style>
+        .day-container {
+            background-color: white;
+            border-radius: 3%;
+            border: 2px solid #205295;
+            text-align: center;
+            margin: 20px;
+        }
+
+        .day-container>div:last-child{
+            margin-bottom: 1em;
+        }
+
+        .day-container > .title-day{
+            background-color: #6c757d;
+            color: white;
+            height: 2em;
+            border-radius: 3%;
+            margin-top: 0.5em;
+        }
+
+        .hour-container {
+            background-color: grey;
+            border-radius: 5%;
+            width: 100%;
+            margin-bottom: 3px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            color: white;
+            padding: 10px;
+            word-break: break-all;
+        }
+
+        .btn-outline-secondary{
+            color: #3C4048;
+            border-color: #3C4048;
+            font-size: 1.5em;
+        }
+
+        .btn-outline-secondary:hover{
+            background-color: #0d6efd;
+        }
+
+        .enabled{
+            background-color: #20c997;
+            cursor: pointer;
+            word-wrap: break-word;
+        }
+
+        .selected{
+            background-color: #E21818;
+            cursor: pointer;
+            color: white;
+            justify-content: center;
+        }
+
+        .hide{
+            display: none;
+        }
+
+    </style>
+    <title>Programación semanal</title>
+</head>
+<body>
+    <div class="container-fluid d-flex justify-content-center bg-primary p-3" style="color: white;">
+        <h2 class="text-center p-1">
+            Bienvenid@ {{request.user}} <i class="bi bi-person"></i>
+        </h2>
+        <a href="{% url 'logout' %}" style="text-decoration: none; color: white; font-size: 1.3em; padding: 10px; margin-left: 2em;">
+            Cerrar Sesión
+            <i class="bi bi-box-arrow-right"></i>
+        </a>
+    </div>
+    <div class="container d-flex justify-content-center align-items-center flex-wrap mt-5" style="height: 100vh; width: 100vw;">
+        <div class="row w-100" id="DayparentContainer">
+            {% csrf_token %}
+            <div class="col-sm-2 day-container d-flex flex-column" id="Lunes">
+                <h4 class="title-day">Lunes</h4>
+                <div class="hour-container" data-blocknum="1" id="lunes-1">1-</div>
+                <div class="hour-container" data-blocknum="2" id="lunes-2">2-</div>
+                <div class="hour-container" data-blocknum="3" id="lunes-3">3-</div>
+                <div class="hour-container" data-blocknum="4" id="lunes-4">4-</div>
+                <div class="hour-container" data-blocknum="5" id="lunes-5">5-</div>
+                <div class="hour-container" data-blocknum="6" id="lunes-6">6-</div>
+                <div class="hour-container" data-blocknum="7" id="lunes-7">7-</div>
+                <div class="hour-container" data-blocknum="8" id="lunes-8">8-</div>
+                <div class="hour-container" data-blocknum="9" id="lunes-9">9-</div>
+            </div>
+            <div class="col-sm-2 day-container d-flex flex-column" id="Martes">
+                <h4 class="title-day">Martes</h4>
+                <div class="hour-container" data-blocknum="1" id="martes-1">1-</div>
+                <div class="hour-container" data-blocknum="2" id="martes-2">2-</div>
+                <div class="hour-container" data-blocknum="3" id="martes-3">3-</div>
+                <div class="hour-container" data-blocknum="4" id="martes-4">4-</div>
+                <div class="hour-container" data-blocknum="5" id="martes-5">5-</div>
+                <div class="hour-container" data-blocknum="6" id="martes-6">6-</div>
+                <div class="hour-container" data-blocknum="7" id="martes-7">7-</div>
+                <div class="hour-container" data-blocknum="8" id="martes-8">8-</div>
+                <div class="hour-container" data-blocknum="9" id="martes-9">9-</div>
+            </div>
+            <div class="col-sm-2 day-container d-flex flex-column" id="Miércoles">
+                <h4 class="title-day">Miércoles</h4>
+                <div class="hour-container" data-blocknum="1" id="miercoles-1">1-</div>
+                <div class="hour-container" data-blocknum="2" id="miercoles-2">2-</div>
+                <div class="hour-container" data-blocknum="3" id="miercoles-3">3-</div>
+                <div class="hour-container" data-blocknum="4" id="miercoles-4">4-</div>
+                <div class="hour-container" data-blocknum="5" id="miercoles-5">5-</div>
+                <div class="hour-container" data-blocknum="6" id="miercoles-6">6-</div>
+                <div class="hour-container" data-blocknum="7" id="miercoles-7">7-</div>
+                <div class="hour-container" data-blocknum="8" id="miercoles-8">8-</div>
+                <div class="hour-container" data-blocknum="9" id="miercoles-9">9-</div>
+            </div>
+            <div class="col-sm-2 day-container d-flex flex-column" id="Jueves">
+                <h4 class="title-day">Jueves</h4>
+                <div class="hour-container" data-blocknum="1" id="jueves-1">1-</div>
+                <div class="hour-container" data-blocknum="2" id="jueves-2">2-</div>
+                <div class="hour-container" data-blocknum="3" id="jueves-3">3-</div>
+                <div class="hour-container" data-blocknum="4" id="jueves-4">4-</div>
+                <div class="hour-container" data-blocknum="5" id="jueves-5">5-</div>
+                <div class="hour-container" data-blocknum="6" id="jueves-6">6-</div>
+                <div class="hour-container" data-blocknum="7" id="jueves-7">7-</div>
+                <div class="hour-container" data-blocknum="8" id="jueves-8">8-</div>
+                <div class="hour-container" data-blocknum="9" id="jueves-9">9-</div>
+            </div>
+            <div class="col-sm-2 day-container d-flex flex-column" id="Viernes">
+                <h4 class="title-day">Viernes</h4>
+                <div class="hour-container" data-blocknum="1" id="Viernes-1">1-</div>
+                <div class="hour-container" data-blocknum="2" id="Viernes-2">2-</div>
+                <div class="hour-container" data-blocknum="3" id="Viernes-3">3-</div>
+                <div class="hour-container" data-blocknum="4" id="Viernes-4">4-</div>
+                <div class="hour-container" data-blocknum="5" id="Viernes-5">5-</div>
+                <div class="hour-container" data-blocknum="6" id="Viernes-6">6-</div>
+                <div class="hour-container" data-blocknum="7" id="Viernes-7">7-</div>
+                <div class="hour-container" data-blocknum="8" id="Viernes-8">8-</div>
+                <div class="hour-container" data-blocknum="9" id="Viernes-9">9-</div>
+            </div>
+            <div id='spinner' class="container hide spinner-border text-info mt-5 mb-5" role="status" style="width: 3rem; height: 3rem;">
+            </div>
+            <div class="container d-flex justify-content-center gap-4 mt-5">
+                <button id="btn-send" class="btn btn-outline-secondary btn-lg w-40 mb-5 mt-3">Registrar Programación</button>
+                <a href="{% url 'student_schedule_week' request.user.student.id %}" class="btn btn-outline-secondary btn-lg w-40 mb-5 mt-3">Programación de la semana</a>
+                <input type="hidden" id="urlToSendForm" data-url="{% url 'create_records_student' %}">
+            </div>
+            <!-- input with the url for delete records from db -->
+            <input id="urlDelete" type="hidden" data-url="{% url 'student_record_delete' 1 %}">
+        </div>
+    </div>
+    <script>
+        let json_data = JSON.parse('{{ json_data|safe }}');
+    </script>
+    <!-- Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <!-- Custom js file -->
+    <script src="{% static 'js/script_records_student.js' %}"></script>
+    <!-- SweetAlert -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+</html>
