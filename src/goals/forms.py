@@ -13,7 +13,7 @@ class CreateGoalForm(forms.ModelForm):
             "name": forms.TextInput(
                 attrs={
                     "class": "form-control text-center",
-                    "placeholder": "Escriba el nombre del objetivo",
+                    "placeholder": "Goal name",
                 }
             ),
             "classroom": forms.Select(

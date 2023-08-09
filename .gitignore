@@ -65,3 +65,6 @@ src/*/migrations/
 **/migrations/
 src/config/staticfiles/
 .vscode/
+
+#AWS
+*.pem

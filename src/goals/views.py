@@ -92,7 +92,7 @@ class GoalUpdateView(UpdateView):
         return kwargs
     
     def form_valid(self, form):
-        messages.success(self.request, "Objetivo actualizado exitosamente!")
+        messages.success(self.request, "Goal successfully updated!")
         return super().form_valid(form)
     
     def get_success_url(self):

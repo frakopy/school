@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <!-- DataTables -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.css">
-    <title>Asistencia</title>
+    <title>class attendance</title>
 </head>
 <body class="bg-primary">
     <div class="d-flex justify-content-center">
@@ -20,9 +20,9 @@
                 <i class="fas fa-home fa-3x" style="color: white"></i>
             </a>
             {% if 'total_records' not in request.build_absolute_uri %}
-                <h2 class="text-center mt-4 mb-2 flex-grow-1" style="color: white;">TOMA DE ASISTENCIA</h2>
+                <h2 class="text-center mt-4 mb-2 flex-grow-1" style="color: white;">Class Attendance</h2>
             {% else %}
-                <h2 class="text-center mt-4 mb-2 flex-grow-1" style="color: white;">TOTAL DE REGISTROS CREADOS</h3>
+                <h2 class="text-center mt-4 mb-2 flex-grow-1" style="color: white;">Total records created</h3>
             {% endif %}
         </div>
             
@@ -60,17 +60,17 @@
             <table id="table_attendance" class="table table-striped border-secondary" style="padding-top: 2em;">
                 <thead class="table-dark">
                     <tr>
-                        <th class="text-center">Alumno</th>
+                        <th class="text-center">Student</th>
                         <th class="text-center">Classroom</th>
-                        <th class="text-center">Agendado Para</th>
-                        <th class="text-center">Hora</th>
-                        <th class="text-center">Asignatura</th>
-                        <th class="text-center">Observaciones</th>
-                        <th class="text-center">Presente</th>
+                        <th class="text-center">Scheduled for</th>
+                        <th class="text-center">Hour</th>
+                        <th class="text-center">Course</th>
+                        <th class="text-center">Observations</th>
+                        <th class="text-center">Present</th>
                         {% if 'total_records' in request.build_absolute_uri %}
-                            <th class="text-center">Editar</th>
+                            <th class="text-center">Edit</th>
                         {% else %}
-                            <th class="text-center">Objetivos</th>
+                            <th class="text-center">Goals</th>
                         {% endif %}
                     </tr>
                 </thead>
@@ -133,12 +133,12 @@
             </table>
             <br>
             <div class="d-flex flex-column align-items-center">
-                {% if not record_list %}
-                    <a class="mb-5 btn btn-secondary" href="{%url 'total_records' %}">Ver todos los Registros</a>
+                {% if not record_list and 'total_records' not in request.build_absolute_uri %}
+                    <a class="mb-5 btn btn-secondary" href="{%url 'total_records' %}">View all records</a>
                 {% else %}
                     
                     {% if 'total_records' not in request.build_absolute_uri %}
-                        <input class="btn-danger btn mb-4 w-50" type="submit" value="Registar Asistencia">
+                        <input class="btn-danger btn mb-4 w-50" type="submit" value="Save attendance">
                     {% endif %}
                 {% endif %}
             </div>
@@ -157,9 +157,9 @@
                         <table id="progressTable" class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th>Objetivo</th>
-                                    <th>Progreso (%)</th>
-                                    <th>Comentarios</th>
+                                    <th>Goal</th>
+                                    <th>Progress (%)</th>
+                                    <th>Comments</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -168,8 +168,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary close-modal" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" id="progressBtn">Registar Avance</button>
+                    <button type="button" class="btn btn-secondary close-modal" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="progressBtn">Save progress</button>
                     <input type="hidden" data-url="{% url 'goal_progress_save' %}" id="urlTosendData">
                     <input type="hidden" id="urlToGetData">
                 </div>
@@ -195,17 +195,17 @@
         $(document).ready( function () {
             $('#table_attendance').DataTable({
                 "language": {
-                    "lengthMenu": "Mostrar _MENU_ registros por página",
-                    "zeroRecords": "No se encontraron registros",
-                    "info": "Mostrando página _PAGE_ de _PAGES_",
-                    "infoEmpty": "No hay registros disponibles",
-                    "infoFiltered": "(filtrados de _MAX_ registros totales)",
-                    "search": "Buscar:",
+                    "lengthMenu": "Show _MENU_ records per page",
+                    "zeroRecords": "No records to display",
+                    "info": "Displaying page _PAGE_ from _PAGES_",
+                    "infoEmpty": "No records available",
+                    "infoFiltered": "(filtered from _MAX_ total records)",
+                    "search": "Search:",
                     "paginate": {
-                        "first": "Primera",
-                        "last": "Última",
-                        "next": "Siguiente",
-                        "previous": "Anterior"
+                        "first": "First",
+                        "last": "Last",
+                        "next": "Next",
+                        "previous": "Previous"
                     },
                 }
             });

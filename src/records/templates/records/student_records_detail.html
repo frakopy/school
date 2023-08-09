@@ -10,43 +10,43 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <!-- DataTables -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.css">
-    <title>Detalle del Alumno</title>
+    <title>Student details</title>
 </head>
 <body>
     <div class="container-fluid mb-5 d-flex justify-content-center gap-5 bg-primary p-3">
         <a href="{{previous_url}}" class="text-center" style="text-decoration: none; font-size: 1.4em; color: white;">
             <i class="bi bi-arrow-left-circle-fill"></i>
-            Regresar
+            Back
         </a>
-        <h3 style="color: white;">Detalles del alumno: {{student_name}}</h3>
+        <h3 style="color: white;">Detais of the student: {{student_name}}</h3>
     </div>
     <div class="container-fluid mb-5">
         {% if 'updated' in request.GET %}
             <div class="text-center alert alert-success alert-dismissible fade show mt-3" role="alert">
-                <strong>Registro actualizado de forma exitosa!</strong>
+                <strong>Record successfully updated!</strong>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         {% endif %}
         <div id="alertDelete" class="d-none text-center alert alert-success alert-dismissible fade show mt-3" role="alert">
-            <strong>Registro borrado de forma exitosa!</strong>
+            <strong>Record successfully deleted!</strong>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
         <div class="container d-flex justify-content-center">
             <!-- Button trigger modal -->
             <button type="button" class="btn btn-secondary w-40 m-3" data-bs-toggle="modal" data-bs-target="#modalProgress">
-                Ver Progreso de Objetivos
+                View goal progress
             </button>
         </div>
         <table id="table_student" class="table table-striped" style="padding-top: 2em;">
             <thead class="table-dark">
                 <tr>
-                    <th class="text-center">Día</th>
-                    <th class="text-center">Hora</th>
-                    <th class="text-center">Asignatura</th>
-                    <th class="text-center">Observaciones</th>
-                    <th class="text-center">Asistió</th>    
-                    <th class="text-center">Editar</th>
-                    <th class="text-center">Eliminar</th>
+                    <th class="text-center">Day</th>
+                    <th class="text-center">Hour</th>
+                    <th class="text-center">Course</th>
+                    <th class="text-center">Observations</th>
+                    <th class="text-center">Seat</th>    
+                    <th class="text-center">Edit</th>
+                    <th class="text-center">Delete</th>
                 </tr>
             </thead>
             <tbody>
@@ -65,7 +65,7 @@
                         </td>
                         <td class="text-center">                               
                             {% if record.present == True %}
-                                <span style="color:#03C988;font-weight: bold;">Si</span>
+                                <span style="color:#03C988;font-weight: bold;">Yes</span>
                             {% else %}
                                 <span style="color:#FF0303;font-weight: bold;">No</span>
                             {% endif %}
@@ -100,10 +100,10 @@
                             <table id="progressTable" class="table table-striped">
                                 <thead>
                                     <tr>
-                                        <th>Objetivo</th>
-                                        <th>Asignatura</th>
-                                        <th>Progreso (%)</th>
-                                        <th>Comentarios</th>
+                                        <th>Goal</th>
+                                        <th>Course</th>
+                                        <th>Progress (%)</th>
+                                        <th>Comments</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -118,7 +118,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary close-modal" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-secondary close-modal" data-bs-dismiss="modal">Close</button>
                         <input type="hidden" data-url="{% url 'goal_progress_save' %}" id="urlTosendData">
                         <input type="hidden" id="urlToGetData">
                     </div>
@@ -137,17 +137,17 @@
         $(document).ready( function () {
             $('#table_student').DataTable({
                 "language": {
-                    "lengthMenu": "Mostrar _MENU_ registros por página",
-                    "zeroRecords": "No se encontraron registros",
-                    "info": "Mostrando página _PAGE_ de _PAGES_",
-                    "infoEmpty": "No hay registros disponibles",
-                    "infoFiltered": "(filtrados de _MAX_ registros totales)",
-                    "search": "Buscar:",
+                    "lengthMenu": "Show _MENU_ records per page",
+                    "zeroRecords": "No records to display",
+                    "info": "Displaying _PAGE_ from _PAGES_",
+                    "infoEmpty": "No records availables",
+                    "infoFiltered": "(filtered from _MAX_ total records)",
+                    "search": "Search:",
                     "paginate": {
-                        "first": "Primera",
-                        "last": "Última",
-                        "next": "Siguiente",
-                        "previous": "Anterior"
+                        "first": "First",
+                        "last": "Last",
+                        "next": "Next",
+                        "previous": "Previous"
                     },
                 }
             });
