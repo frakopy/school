@@ -34,7 +34,7 @@ modalBtn.map((element) => {
     element.addEventListener('click', () => {
         getJsonData().then(result => {
             if(result){
-                modalLabel.textContent = `Avance de objetivos del alumno > ${element.dataset.studentName}`
+                modalLabel.textContent = `Goal progress for student > ${element.dataset.studentName}`
                 const studentId = Number(element.dataset.studentId)
                 const progressData = result.json_progress.filter((el) => el.student_id === studentId )
                 let goalRow = ''
@@ -159,7 +159,7 @@ progressBtn.addEventListener('click', () => {
                 
             Toast.fire({
                 icon: 'success',
-                title: 'Avance registrado exitosamente'
+                title: 'Goal progress successfully saved'
             })
         }
     })  

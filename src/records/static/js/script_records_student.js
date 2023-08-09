@@ -4,7 +4,6 @@ const btnSend = document.getElementById("btn-send");
 // Getting the student id and courses availables
 const studentId = json_data.student_id;
 const courses = json_data.courses;
-console.log(courses);
 const json_list = json_data.json_list;
 
 // Getting schedule day list
@@ -69,7 +68,7 @@ let options = {};
 for (let i = 0; i < courses.length; i++) {
     const course_name = courses[i].name
     const course_availability = courses[i].availability
-    options[course_name] = `${course_name} (${course_availability} cupos disponibles)`;
+    options[course_name] = course_availability > 0 ? `${course_name} (${course_availability} space available)`: `${course_name} (0 space available, can not be selected)`;
 }
 
 
@@ -82,15 +81,15 @@ const setObject = (e) => {
     const objId = e.target.getAttribute("id");
 
     Swal.fire({
-        title: "Selecciona una asignatura",
+        title: "Select a course",
         input: "select",
         allowOutsideClick: false,
         inputOptions: options,
-        inputPlaceholder: "Selecciona una opción",
+        inputPlaceholder: "Select an option",
         showCancelButton: true,
-        confirmButtonText: "Confirmar",
+        confirmButtonText: "Confirm",
         confirmButtonColor: "#2C74B3",
-        cancelButtonText: "Cancelar",
+        cancelButtonText: "Cancel",
         didOpen: () => {
             const selectInput = Swal.getInput();
             const selectOptions = selectInput.getElementsByTagName("option");
@@ -98,7 +97,7 @@ const setObject = (e) => {
                 const option = selectOptions[i];
                 const courseObj = courses.find((obj) =>  obj.name === option.value )
                 if (courseObj) {
-                    if (courseObj.availability === 0) option.disabled = true;
+                    if (courseObj.availability <= 0) option.disabled = true;
                 }
             }
         },
@@ -197,7 +196,7 @@ const deleteFromDb = (e) => {
                 Swal.fire({
                     position: 'top-end',
                     icon: 'success',
-                    title: 'Registro borrado exitosamente en la base de datos!',
+                    title: 'Record successfully deleted from DB!',
                     showConfirmButton: false,
                     background: "#383838",
                     color: "white",
@@ -281,7 +280,7 @@ btnSend.addEventListener("click", () => {
 
             // Using sweetalert js library (through CDN)
             Swal.fire({
-                title: "Programacion guardada con éxito",
+                title: "Schedule successfully saved",
                 color: "white",
                 icon: "success",
                 allowOutsideClick: false,
@@ -298,7 +297,7 @@ btnSend.addEventListener("click", () => {
             // Add 'hide' class for hide again spinner
             spinner.classList.add("hide");
             Swal.fire({
-                title: "Debe realizar al menos una programación",
+                title: "Should do at least one schedule",
                 color: "white",
                 icon: "warning",
                 allowOutsideClick: false,
@@ -310,10 +309,10 @@ btnSend.addEventListener("click", () => {
             // Add 'hide' class for hide again spinner
             spinner.classList.add("hide");
             Swal.fire({
-                title: `Cupos agotados`,
+                title: `No space available`,
                 text: `
-                Para la asignatura de "${result.course_name}" hay ${result.num_available}
-                cupos disponibles pero usted envió ${result.num_records_sent}
+                there is ${result.num_available} space available for the course "${result.course_name}"
+                but you sent ${result.num_records_sent}
                 `,
                 color: "white",
                 icon: "warning",
