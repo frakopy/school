@@ -297,7 +297,7 @@ btnSend.addEventListener("click", () => {
             // Add 'hide' class for hide again spinner
             spinner.classList.add("hide");
             Swal.fire({
-                title: "Should do at least one schedule",
+                title: "You must schedule at least one time slot",
                 color: "white",
                 icon: "warning",
                 allowOutsideClick: false,
