@@ -9,3 +9,4 @@ django-crontab==0.7.1
 django-crispy-forms==1.14.0
 djangorestframework-datatables==0.7.0
 django-grappelli==3.0.4
+gunicorn==21.2.0
