@@ -1,11 +1,23 @@
 version: "3.8"
 services:
+  nginx:
+    build: ./nginx
+    image: nginx
+    container_name: "nginx_cont"
+    ports:
+      - 80:80
+    volumes:
+      - "static_files:/home/src/config/staticfiles"
+    depends_on:
+      - web
   web:
     build: .
+    container_name: "web_cont"
     command: >
       bash -c "/scripts/wait-for-it.sh db:5432    
-      && python manage.py migrate 
-      && gunicorn config.wsgi:application --bind 0.0.0.0:8000 --log-level=debug"
+      && python manage.py migrate
+      && python manage.py collectstatic --noinput
+      && gunicorn config.wsgi:application --bind 0.0.0.0:8030 --log-level=debug"
     environment:
       - COUNTRY_PREFIX=CL
       - DJANGO_SECRET_KEY=*0n3o(6y8t_k1iw_%7^x)riptvn-%kde*%h8e34d%9tpt466ll
@@ -18,22 +30,24 @@ services:
       - DJANGO_SETTINGS_MODULE=config.settings.base
       - ENVIRONMENT=DEV
       - LOGS_DIR=logs
-    ports:
-      - 8030:8000
+    expose:
+      - 8030
     volumes: 
         - "./src:/src"
+        - "static_files:/src/config/staticfiles"
     depends_on:
       - db
   db:
     image: postgres
+    container_name: "db_cont"
     volumes:
       - ./volumes/db:/var/lib/postgresql/data
     environment:
       - POSTGRES_DB=citdb
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=7F6tfFDqxc4nEDSc
-  
   pgadmin:
+    container_name: "pgadmin_cont"
     image: dpage/pgadmin4
     environment:
       PGADMIN_DEFAULT_EMAIL: 'admin@admin.com'
@@ -42,3 +56,6 @@ services:
       - "8080:80"
     depends_on:
       - db
+  
+volumes:
+  static_files:

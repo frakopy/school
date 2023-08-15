@@ -12,6 +12,12 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
 ALLOWED_HOSTS = ['*']
 
+# Set CSRF_TRUSTED_ORIGINS to include the NGINX hostname or IP
+# CSRF_TRUSTED_ORIGINS = ['http://nginx_hostname_or_ip']
+
+# Use this header to detect HTTPS, especially when NGINX is handling SSL termination
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 # Application definition
 
 INSTALLED_APPS = [ 
@@ -181,3 +187,4 @@ LOGGING = {
 }
 
 GRAPPELLI_ADMIN_TITLE = "Colegio Institución Teresiana"
+
