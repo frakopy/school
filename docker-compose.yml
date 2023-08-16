@@ -31,8 +31,6 @@ services:
       - DJANGO_SETTINGS_MODULE=config.settings.base
       - ENVIRONMENT=DEV
       - LOGS_DIR=logs
-    # expose:
-    #   - 8030
     ports:
       - "8030:830"
     volumes: 
