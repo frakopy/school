@@ -63,7 +63,7 @@ volumes/
 .idea/
 src/*/migrations/
 **/migrations/
-src/config/staticfiles/
+# src/config/staticfiles/
 .vscode/
 
 #AWS
