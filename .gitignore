@@ -58,12 +58,13 @@ target/
 
 # Docker
 volumes/
+**.yml
 
 # Pycharm
 .idea/
 src/*/migrations/
 **/migrations/
-# src/config/staticfiles/
+src/config/staticfiles/
 .vscode/
 
 #AWS
