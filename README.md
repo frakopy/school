@@ -4,9 +4,9 @@
 
 [Install Docker Compose (Linux)](https://docs.docker.com/compose/install/#install-compose-on-linux-systems) (Not necessary if using **Docker Desktop for Mac** o **Docker Desktop for Windows**)
 
-Create the enviroment variables  in docker-compose.yml about db, hostname, user and password.
-
 [Install Jinja2 Command-Line Tool](https://pypi.org/project/j2cli/)
+
+Create the enviroment variables  in docker-compose.yml about db, hostname, user and password.
 
 # Local development
 ## Start app (FAST WAY)
