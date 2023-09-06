@@ -14,8 +14,11 @@ from django.contrib import messages
 from .forms import EditRecordForm, StudentRecordUpdateForm
 from django.db.models import Q
 from django.db.models import F
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-class TotalRecordsView(ListView):
+class TotalRecordsView(LoginRequiredMixin, ListView):
+    login_url = reverse_lazy('login')
+
     model = Record
     template_name = "records/records.html"
 
@@ -27,7 +30,9 @@ class TotalRecordsView(ListView):
         )
 
 
-class RecordsView(ListView):
+class RecordsView(LoginRequiredMixin, ListView):
+    login_url = reverse_lazy('login')
+
     model = Record
     template_name = "records/records.html"
 
@@ -62,7 +67,9 @@ class RecordsView(ListView):
         return context
 
 
-class GetJsonProgressView(RecordsView):
+class GetJsonProgressView(RecordsView, LoginRequiredMixin):
+    login_url = reverse_lazy('login')
+
     def get(self, request, *args, **kwargs):
         progress_student = []
         records = self.get_queryset()
@@ -75,7 +82,9 @@ class GetJsonProgressView(RecordsView):
         return JsonResponse({"json_progress": progress_student})
 
 
-class SaveRecordsView(View):
+class SaveRecordsView(LoginRequiredMixin, View):
+    login_url = reverse_lazy('login')
+
     def post(self, request, *args, **kwargs):
         classroom_id = self.kwargs["classroom_id"]
         hour = self.kwargs["hour_str"]
@@ -109,7 +118,9 @@ class SaveRecordsView(View):
             return redirect(reverse("records_list", args=[classroom_id, hour]))
 
 
-class CreateRecordsStudentView(View):
+class CreateRecordsStudentView(LoginRequiredMixin, View):
+    login_url = reverse_lazy('login')
+
     def filtered_records(self):
         student = self.request.user.student
         today_num_week = datetime.now().weekday()
@@ -307,7 +318,9 @@ class CreateRecordsStudentView(View):
             return JsonResponse({"result": str(e)})
 
 
-class StudentScheduleWeekView(ListView):
+class StudentScheduleWeekView(LoginRequiredMixin, ListView):
+    login_url = reverse_lazy('login')
+
     model = Record
     template_name = "records/student_schedule_week.html"
 
@@ -324,7 +337,9 @@ class StudentScheduleWeekView(ListView):
         return queryset
 
 
-class UpdateRecordsView(UpdateView):
+class UpdateRecordsView(LoginRequiredMixin, UpdateView):
+    login_url = reverse_lazy('login')
+
     model = Record
     form_class = EditRecordForm
     template_name = "records/update_records.html"
@@ -342,7 +357,9 @@ class UpdateRecordsView(UpdateView):
         return reverse_lazy("total_records")
 
 
-class StudentRecordView(ListView):
+class StudentRecordView(LoginRequiredMixin, ListView):
+    login_url = reverse_lazy('login')
+
     model = Record
     template_name = "records/student_records_detail.html"
 
@@ -369,7 +386,9 @@ class StudentRecordView(ListView):
         )
 
 
-class StudentRecordUpdateView(UpdateView):
+class StudentRecordUpdateView(LoginRequiredMixin, UpdateView):
+    login_url = reverse_lazy('login')
+
     model = Record
     form_class = StudentRecordUpdateForm
     template_name = "records/student_record_update.html"
@@ -393,7 +412,9 @@ class StudentRecordUpdateView(UpdateView):
         )
 
 
-class StudentRecordDeleteView(DeleteView):
+class StudentRecordDeleteView(LoginRequiredMixin, DeleteView):
+    login_url = reverse_lazy('login')
+
     model = Record
 
     def form_valid(self, form):

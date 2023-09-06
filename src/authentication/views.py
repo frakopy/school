@@ -1,4 +1,3 @@
-from email.policy import default
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import reverse_lazy
 from courses.models import Course

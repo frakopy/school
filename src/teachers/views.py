@@ -1,12 +1,15 @@
 from django.shortcuts import redirect
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from classrooms.models import Classroom
 from records.models import Record
 import datetime
 
 
-class ClassroomListView(ListView):
+class ClassroomListView(LoginRequiredMixin, ListView):
+    login_url = reverse_lazy('login')
+
     model = Classroom
     template_name = "teachers/home_teachers.html"
 
@@ -67,7 +70,9 @@ class ClassroomListView(ListView):
         return self.get_classrooms()
 
 
-class UncompletedScheduleView(ListView):
+class UncompletedScheduleView(LoginRequiredMixin, ListView):
+    login_url = reverse_lazy('login')
+
     model = Record
     template_name = "teachers/head_teachers.html"
 
