@@ -6,20 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <!-- DataTables -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css">
     <title>Head Teacher</title>
 </head>
 <body>
     <style>
+        .title>.name-cont>i{font-size: 1.9em;}
+
         .teacher-cont{
             display: flex;
-            padding: 1.5em;
+            padding: 0.5em;
         }
 
-        .teacher-cont > .name-cont, .teacher-cont> i, .teacher-cont > a {
+        .teacher-cont> i, .teacher-cont > a {
             margin-left: auto;
         }
 
@@ -32,26 +36,56 @@
             margin-bottom: 2em;
         }
 
+        /* Media queries */
+        @media (max-width: 768px) {
+            .title>.name-cont>i{font-size: 1.5em;}
+            
+            .title>.home-cont{
+                font-size: 0.8em; 
+                width: 100%; 
+                text-align: center;
+                margin-left: 0 !important; 
+            }
+            
+            .title>.name-cont{font-size: 1em; margin: auto;}
+
+            .title > .logout{
+                width: 100%;
+                text-align: center;
+            }
+            .teacher-cont{
+                justify-content: center !important;
+            }
+
+            .fa-user{font-size: 1em;}
+        }
     </style>
 
-    <div class="container-fluid teacher-cont bg-primary">
-        <div style="display: flex; width: 50%; justify-content: end;" class="name-cont">
-            <i style="color: white; font-size: 1.9em;" class="fas fa-chalkboard-teacher me-2"></i>
-            <h3 style="color: white;">{{request.user.user_teacher}}</h3>
+    <div class="container-fluid teacher-cont bg-primary title d-flex flex-wrap align-items-center gap-1 justify-content-between">
+        <a href="{% url 'home_teachers' %}" class="ms-5 home-cont">
+            <i class="fas fa-home fa-3x" style="color: white"></i>
+        </a>
+        <h2 class="text-center mt-1 mb-2 name-cont" style="color: white;">
+            Students without schedule
+        </h2>
+        <div class="d-flex flex-column align-items-center" style="padding: 0.5em;">
+            <i class="fas fa-user fa-2x title" style="color: white"></i>
+            <p class="title mb-0" style="color: white">{{request.user.user_teacher}}</p>
         </div>
-        <a style="color: white; font-size: 1.3em; text-decoration: none;" href="{% url 'logout' %}">Logout</a>
     </div>
 
-    <div class="container-fluid mb-5" style="padding-left: 3em; padding-right: 3em; padding-top: 3em;">
-        <h5 class="text-center text-decoration-underline mt-5 mb-5">
-            Students from classroom <span style="color: #F15A59;">"{{ request.user.user_teacher.classroom_set.first }}"</span> without schedule:
-        </h5>
-        <table id="table_student" class="table table-striped table-hover border-secondary">
+    <div class="container-fluid mb-5 mt-3">
+        <table 
+        id="table_student"
+        width="100%"
+        style="padding-top: 2em;"
+        class="table table-striped table-hover border-secondary display responsive nowrap">
             <thead class="table-dark">
                 <tr>
                     <th class="text-center">Student</th>
                     <th class="text-center">Email</th>
                     <th class="text-center">Phone</th>
+                    <th class="text-center">Classroom</th>
                 </tr>
             </thead>
             <tbody>
@@ -60,6 +94,7 @@
                         <td class="text-center">{{ student.name }}</td>
                         <td class="text-center">{{ student.email }}</td>
                         <td class="text-center">{{ student.phone }}</td>
+                        <td class="text-center">{{ student.classroom }}</td>
                     </tr>
                 {% endfor %}
             </tbody>
@@ -72,6 +107,7 @@
     <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
     <!-- DataTable -->
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
     <!-- Custom Script for DataTable-->
     <script>
         $(document).ready( function () {

@@ -11,24 +11,37 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <!-- DataTables -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css">
     <title>class attendance</title>
+    <style>
+        .main-cont{padding: 0.5em;}
+
+        /* Media queries */
+        @media (max-width: 768px) {
+            .title{ 
+                font-size: 1em; 
+                width: 100%;
+            }
+
+            .title>a{margin-left: 0 !important;}
+            
+            .fa-home{font-size: 2.5em;}
+        }
+    </style>
 </head>
 <body class="bg-primary">
-    <div class="d-flex justify-content-center">
-        <div class="container d-flex align-items-center">
-            <a href="{% url 'home_teachers' %}" class="ms-5">
-                <i class="fas fa-home fa-3x" style="color: white"></i>
-            </a>
-            {% if 'total_records' not in request.build_absolute_uri %}
-                <h2 class="text-center mt-4 mb-2 flex-grow-1" style="color: white;">Class Attendance</h2>
-            {% else %}
-                <h2 class="text-center mt-4 mb-2 flex-grow-1" style="color: white;">Total records created</h3>
-            {% endif %}
-        </div>
-            
+    <div class="d-flex justify-content-center align-items-center main-cont title flex-wrap gap-1">
+        <a href="{% url 'home_teachers' %}" class="ms-5">
+            <i class="fas fa-home fa-3x" style="color: white"></i>
+        </a>
+        {% if 'total_records' not in request.build_absolute_uri %}
+            <h2 class="text-center mt-1 mb-2 flex-grow-1 title" style="color: white;">Class Attendance</h2>
+        {% else %}
+            <h2 class="text-center mt-1 mb-2 flex-grow-1 title" style="color: white;">Total records created</h3>
+        {% endif %}
         <div class="d-flex flex-column align-items-center" style="padding: 0.5em;">
-            <i class="fas fa-user fa-2x" style="color: white"></i>
-            <p style="color: white">{{request.user.user_teacher}}</p>
+            <i class="text-center fas fa-user fa-2x title" style="color: white"></i>
+            <p class="title mb-0" style="color: white">{{request.user.user_teacher}}</p>
         </div>
     </div>
 
@@ -43,12 +56,11 @@
             {% endfor %}
             </ul>
         </div>
-    {% endif %}
+    {% endif %}     
             
     <div class="container-fluid" style="background-color: white; padding-left: 3em; padding-right: 3em; padding-top: 3em;">
         
         {% if 'total_records' not in request.build_absolute_uri %}
-            
             {% with request.resolver_match.kwargs as dic_args %}
                 <form method="POST" action= "{% url 'save_records' dic_args.classroom_id dic_args.hour_str %}">
             {% endwith %}
@@ -57,7 +69,11 @@
         {% endif %}
             
             {% csrf_token %}
-            <table id="table_attendance" class="table table-striped border-secondary" style="padding-top: 2em;">
+            <table 
+            id="table_attendance" 
+            class="table table-striped border-secondary display responsive nowrap"
+            width="100%" 
+            style="padding-top: 2em;">
                 <thead class="table-dark">
                     <tr>
                         <th class="text-center">Student</th>
@@ -79,7 +95,6 @@
                         <tr>
                             <td class="text-center">
                                 <a
-                                style="text-decoration: none; color: black;" 
                                 href="{% url 'student_records' record.student_id user.user_teacher.id %}?previous_url={{ request.build_absolute_uri }}">
                                 {{ record.student }}
                                 </a>
@@ -182,6 +197,7 @@
     <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
     <!-- DataTable -->
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
     <!-- Custom Script for DataTable-->
     <script>
         const currentUrl = window.location.href

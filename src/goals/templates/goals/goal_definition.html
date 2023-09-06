@@ -12,6 +12,14 @@
 </head>
 <style>
     .errorlist{color: #FF0303}
+
+    .form-cont>form{width: 50%;}
+
+    /* Media queries */
+    @media (max-width: 768px) {
+        .form-cont>form{width: 90%;}
+    }
+
 </style>
 <body class="bg-primary">
     <div class="container-fluid d-flex justify-content-center bg-primary p-3" style="color: white">
@@ -22,8 +30,8 @@
         {% endif %}
             
     </div>
-    <div class="d-flex justify-content-center align-items-center container-fluidp-5 bg-white" style="height: 20em;" >
-        <form method="post" style="width: 50%;" class="mt-5 mb-5">
+    <div class=" form-cont d-flex justify-content-center flex-wrap align-items-center container-fluidp-5 bg-white" style="height: 20em;" >
+        <form method="post" class="mt-5 mb-5">
             {% csrf_token %}
             {{form.as_p}}
             <div class="container mt-5 w-100 d-flex gap-3">

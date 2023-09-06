@@ -9,28 +9,45 @@
     <title>Login</title>
 </head>
 <body>
-<style>.errorlist{color:red;}</style>
+<style>
+    .errorlist{color:red;}
+    /* Media queries */
+    @media (max-width: 768px) {
+        form>p>.btn{
+            font-size: 1em;
+            padding: 0.3em;
+        }
+
+        .card > .card-body> .card-title{
+            font-size: 1em !important;
+        }
+
+        .card > .card-body> .card-text{
+            font-size: 0.8em !important;
+        }
+    }
+</style>
 <main role="main">
     <div class="container">
         <div class="row mt-3">
-        <div class="col-md-9 mx-auto mb-5">
-            <form action="" method="post">
-                {% csrf_token %}
-                <h3 class="mb-4 text-center">Login</h3>
-                {% if form.non_field_errors %}
-                    <p style="color:red">Wrong user or password, please try again</p>
-                {% endif %}
-                <p>
-                    <input type="text" name="username" autofocus maxlength="254" required
-                    id="id_username" class="form-control text-center" placeholder="User Name"/>
-                </p>
-                <p>
-                    <input type="password" name="password" required
-                    id="id_password" class="form-control text-center" placeholder="Password"/>
-                </p>
-                <p><input type="submit" class="btn btn-lg btn-primary btn-block w-100" value="Submit"></p>
-            </form>
-        </div>
+            <div class="col-md-9 mx-auto mb-5">
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <h3 class="mb-4 text-center">Login</h3>
+                    {% if form.non_field_errors %}
+                        <p style="color:red">Wrong user or password, please try again</p>
+                    {% endif %}
+                    <p>
+                        <input type="text" name="username" autofocus maxlength="254" required
+                        id="id_username" class="form-control text-center" placeholder="User Name"/>
+                    </p>
+                    <p>
+                        <input type="password" name="password" required
+                        id="id_password" class="form-control text-center" placeholder="Password"/>
+                    </p>
+                    <p><input type="submit" class="btn btn-lg btn-primary btn-block w-100" value="Submit"></p>
+                </form>
+            </div>
         </div>
     </div>
     <h3 class="text-center">Credentials for test:</h3>
@@ -38,7 +55,7 @@
         <div class="card text-black mb-2" style="max-width: 80%;">
             <div class="card-body">
                 <h5 class="card-title">Acces for Teacher user:</h5>
-                <p class="card-text">user:  jcastillo</p>
+                <p class="card-text">user:  dsaavedra</p>
                 <p class="card-text">password:  teacher123</p>
             </div>
         </div>
