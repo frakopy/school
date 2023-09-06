@@ -6,9 +6,10 @@ from .models import Goals, GoalProgress
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 from django.views import View
 from .forms import CreateGoalForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-
-class GoalCreateView(CreateView):
+class GoalCreateView(LoginRequiredMixin, CreateView):
+    login_url = reverse_lazy('login')
     model = Goals
     form_class = CreateGoalForm
     template_name = "goals/goal_definition.html"
@@ -36,7 +37,9 @@ class GoalCreateView(CreateView):
         return reverse_lazy("home_teachers") + "?goal_created"
 
 
-class GoalProgressView(ListView):
+class GoalProgressView(LoginRequiredMixin, ListView):
+    login_url = reverse_lazy('login')
+
     model = GoalProgress
     template_name = "goals/goal_progress.html"
 
@@ -59,7 +62,9 @@ class GoalProgressView(ListView):
         return goal_progress
 
 
-class ProgressSaveView(View):
+class ProgressSaveView(LoginRequiredMixin, View):
+    login_url = reverse_lazy('login')
+
     def post(self, request, *args, **kwargs):
         jsonData = json.loads(request.body.decode("utf-8"))
         for prog_dic in jsonData:
@@ -78,7 +83,9 @@ class ProgressSaveView(View):
         return JsonResponse({"result": "ok"})
 
 
-class GoalUpdateView(UpdateView):
+class GoalUpdateView(LoginRequiredMixin, UpdateView):
+    login_url = reverse_lazy('login')
+
     model = Goals
     form_class = CreateGoalForm #Form reused from "GoalCreateView"
     template_name = "goals/goal_definition.html" # Template reused from "GoalCreateView"
@@ -99,7 +106,9 @@ class GoalUpdateView(UpdateView):
         return reverse_lazy("home_teachers")
     
 
-class GoalDeleteView(DeleteView):
+class GoalDeleteView(LoginRequiredMixin, DeleteView):
+    login_url = reverse_lazy('login')
+
     model = Goals
 
     def form_valid(self, form):

@@ -59,6 +59,7 @@ target/
 # Docker
 volumes/
 **.yml
+.yml
 
 # Pycharm
 .idea/
