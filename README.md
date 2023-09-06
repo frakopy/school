@@ -6,6 +6,8 @@
 
 [Install Jinja2 Command-Line Tool](https://pypi.org/project/j2cli/)
 
+Create the enviroment variables  in docker-compose.yml about db, hostname, user and password.
+
 # Local development
 ## Start app (FAST WAY)
 
