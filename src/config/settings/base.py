@@ -32,7 +32,6 @@ INSTALLED_APPS = [
     'rest_framework_datatables',
     'django_crontab',
     'crispy_forms',
-    'cit',
     'teachers',
     'classrooms',
     'courses',
@@ -69,7 +68,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'cit', 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'school', 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -186,5 +185,5 @@ LOGGING = {
     }
 }
 
-GRAPPELLI_ADMIN_TITLE = "Colegio Institución Teresiana"
+GRAPPELLI_ADMIN_TITLE = "School-Management"
 

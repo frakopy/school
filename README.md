@@ -8,29 +8,15 @@
 
 Create the enviroment variables  in docker-compose.yml about db, hostname, user and password.
 
-# Local development
-## Start app (FAST WAY)
 
-You can start the project via the _run.sh_ script
+## Start app
 
 ```
-./run.sh
-```
-
-## Start app (MANUALLY)
-### Start DB
-
-```
-docker-compose up -d db
+docker-compose up -d
 ```
 
 The ./volumes/mysql folder will be created, this is for persisting data, if you want to load a new dump or empty your db, this folder can be eliminated.
 
-### Start app
-
-```
-docker-compose up -d cit
-```
 
 ### Stop app
 
@@ -38,14 +24,12 @@ docker-compose up -d cit
 docker-compose down
 ```
 
-## Fresh install
+## To create a Django superuser and create static file root, please run the following command in the project: directory:
 You may want to create a django-admin superuser:
 
 ```
 docker-compose exec web python manage.py createsuperuser
 ```
-
-And collect grapelli grapelly admin media files:
 
 ```
 docker-compose exec web python manage.py collectstatic
@@ -64,6 +48,3 @@ For migrating
 docker-compose exec web python manage.py migrate
 ```
 
-# Questions?
-
-Just ask!

@@ -170,8 +170,8 @@ class CreateRecordsStudentView(LoginRequiredMixin, View):
             return HttpResponse(
                 f"""
                     <h2>
-                        El alumno '{student}' aun no tiene un classroom asignado <br>
-                        por favor solicite al Admin que le asigne un classroom
+                        The student '{student}' does not have a classroom assigned yet.
+                        Please ask the Admin to assign a classroom to them.
                     </h2>
                     <a href="{base_url}/authentication/logout">Salir</a>
                     """
