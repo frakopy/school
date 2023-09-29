@@ -9,7 +9,7 @@
 Create the enviroment variables  in docker-compose.yml about db, hostname, user and password.
 
 
-## Start app
+## Start the application
 
 ```
 docker-compose up -d
@@ -18,7 +18,7 @@ docker-compose up -d
 The ./volumes/mysql folder will be created, this is for persisting data, if you want to load a new dump or empty your db, this folder can be eliminated.
 
 
-### Stop app
+### Stop the application
 
 ```
 docker-compose down
